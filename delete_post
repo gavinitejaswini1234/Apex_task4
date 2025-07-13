@@ -1,0 +1,15 @@
+<?php
+session_start();
+include 'db.php';
+
+if ($_SESSION['role'] !== 'admin') {
+    echo "Access Denied";
+    exit;
+}
+
+if (isset($_GET['id'])) {
+    $stmt = $pdo->prepare("DELETE FROM posts WHERE id = ?");
+    $stmt->execute([$_GET['id']]);
+    header("Location: index.php");
+}
+?>
